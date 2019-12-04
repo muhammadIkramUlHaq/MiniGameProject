@@ -1,6 +1,5 @@
 package com.king.game.handler;
 
-import com.king.game.SessionAuthenticator;
 import com.king.game.service.SessionService;
 import com.king.game.service.UserService;
 import com.sun.net.httpserver.HttpExchange;
@@ -23,7 +22,7 @@ public class LoginHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        int userId = SessionAuthenticator.getPathParameter(httpExchange);
+        int userId = RootHandler.getPathParameter(httpExchange);
         String sessionKey = sessionService.createSessionKey();
         userService.createUserSession(sessionKey, userId);
         logger.info("Creating Session for UserID = " + userId + ", with Session Key = " + sessionKey);

@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static com.king.game.SessionAuthenticator.getPathParameter;
+import static com.king.game.handler.RootHandler.getPathParameter;
 
 public class HighScoreHandler implements HttpHandler {
     private final LevelService levelService;

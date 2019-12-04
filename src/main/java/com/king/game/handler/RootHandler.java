@@ -8,6 +8,10 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.lang.Math.abs;
 
 public class RootHandler implements HttpHandler {
     private final static String LOGIN = "/login";
@@ -29,5 +33,26 @@ public class RootHandler implements HttpHandler {
         } else {
             new NotFoundHandler().handle(httpExchange);
         }
+    }
+
+    public static int getPathParameter(HttpExchange httpExchange) {
+        String path = httpExchange.getRequestURI().getPath();
+        return abs(Integer.parseInt(path.split("/")[1].trim()));
+    }
+
+    public static Map<String, String> queryToMap(HttpExchange httpExchange) {
+        String query = httpExchange.getRequestURI().getQuery();
+        Map<String, String> result = new HashMap<>();
+        if (query != null) {
+            for (String param : query.split("&")) {
+                String[] entry = param.split("=");
+                if (entry.length > 1) {
+                    result.put(entry[0], entry[1]);
+                } else {
+                    result.put(entry[0], "");
+                }
+            }
+        }
+        return result;
     }
 }

@@ -15,8 +15,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static com.king.game.SessionAuthenticator.getPathParameter;
-import static com.king.game.SessionAuthenticator.queryToMap;
+import static com.king.game.handler.RootHandler.getPathParameter;
+import static com.king.game.handler.RootHandler.queryToMap;
+import static java.lang.Math.abs;
 
 public class ScoreHandler implements HttpHandler {
     private final UserService userService;
@@ -35,8 +36,7 @@ public class ScoreHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        String query = httpExchange.getRequestURI().getQuery();
-        Map<String, String> params = queryToMap(query);
+        Map<String, String> params = queryToMap(httpExchange);
         final String sessionKey = params.get("sessionkey");
         if (!sessionAuthenticator.authenticate(sessionKey)) {
             String response = "Session Key Expired";
@@ -47,9 +47,9 @@ public class ScoreHandler implements HttpHandler {
             outputStream.close();
         } else {
             int levelId = getPathParameter(httpExchange);
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
-            BufferedReader br = new BufferedReader(isr);
-            int score = Integer.parseInt(br.readLine());
+            InputStreamReader inputStreamReader = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            int score = abs(Integer.parseInt(bufferedReader.readLine()));
             User user = userService.getUser(sessionKey);
             logger.info("Posting the Score for UserID =" + user.getUserId() + "," +
                     " for Level = " + levelId +
