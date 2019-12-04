@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import static java.lang.Math.abs;
 
 public class SessionAuthenticator {
-    private final static int SESSION_TIMEOUT = 10;
+    private final static int SESSION_TIMEOUT_IN_MINUTES = 10;
     private final SessionService sessionService;
 
     public SessionAuthenticator(SessionService sessionService) {
@@ -22,6 +22,6 @@ public class SessionAuthenticator {
         }
         Duration duration = Duration.between(LocalDateTime.now(), sessionTime);
         long diff = abs(duration.toMinutes());
-        return diff < SESSION_TIMEOUT;
+        return diff < SESSION_TIMEOUT_IN_MINUTES;
     }
 }
