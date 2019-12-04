@@ -14,7 +14,7 @@ public class LevelRepository {
     }
 
     public static synchronized LevelRepository getInstance() {
-        if (levelRepository == null) { //if there is no instance available... create new one
+        if (levelRepository == null) {
             levelRepository = new LevelRepository();
         }
         return levelRepository;

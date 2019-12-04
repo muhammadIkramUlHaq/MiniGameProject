@@ -12,7 +12,7 @@ public class UserRepository {
     }
 
     public static synchronized UserRepository getInstance()  {
-        if (userRepository == null){ //if there is no instance available... create new one
+        if (userRepository == null){ 
             userRepository = new UserRepository();
         }
         return userRepository;

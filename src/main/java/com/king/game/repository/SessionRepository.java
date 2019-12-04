@@ -13,7 +13,7 @@ public class SessionRepository {
     }
 
     public static synchronized SessionRepository getInstance() {
-        if (sessionRepository == null) { //if there is no instance available... create new one
+        if (sessionRepository == null) {
             sessionRepository = new SessionRepository();
         }
         return sessionRepository;
